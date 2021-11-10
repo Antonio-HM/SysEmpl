@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_spanish_ci">bdempleado</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="tbempleado" view="colnames">
+<left>235</left>
+<top>203</top>
+<width>138</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `tbempleado` (
+  `idEmpleado` int(11) NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
+  `idPais` int(11) NOT NULL,
+  `idDepartamento` int(11) NOT NULL,
+  `idMunicipio` int(11) NOT NULL,
+  `codigoArea` varchar(5) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `telefono` varchar(10) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`idEmpleado`),
+  KEY `FK_tbempleado_pais` (`idPais`),
+  KEY `FK_tbempleado_depto` (`idDepartamento`),
+  KEY `FK_tbempleado_municipio` (`idMunicipio`),
+  CONSTRAINT `FK_tbempleado_depto` FOREIGN KEY (`idDepartamento`) REFERENCES `tbdepartamento` (`idDepartamento`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tbempleado_municipio` FOREIGN KEY (`idMunicipio`) REFERENCES `tbmunicipio` (`idMunicipio`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tbempleado_pais` FOREIGN KEY (`idPais`) REFERENCES `tbpais` (`idPais`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="tbpais" view="colnames">
+<left>553</left>
+<top>56</top>
+<width>113</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tbpais` (
+  `idPais` int(11) NOT NULL AUTO_INCREMENT,
+  `nombrePais` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`idPais`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="tbdepartamento" view="colnames">
+<left>698</left>
+<top>201</top>
+<width>172</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `tbdepartamento` (
+  `idDepartamento` int(11) NOT NULL AUTO_INCREMENT,
+  `nombreDepartamento` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `idPais` int(11) NOT NULL,
+  PRIMARY KEY (`idDepartamento`),
+  KEY `FK_tbdepartamento_pais` (`idPais`),
+  CONSTRAINT `FK_tbdepartamento_pais` FOREIGN KEY (`idPais`) REFERENCES `tbpais` (`idPais`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="tbmunicipio" view="colnames">
+<left>884</left>
+<top>374</top>
+<width>142</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `tbmunicipio` (
+  `idMunicipio` int(11) NOT NULL AUTO_INCREMENT,
+  `nombreMunicipio` varchar(75) COLLATE utf8_spanish_ci NOT NULL,
+  `idDepartamento` int(11) NOT NULL,
+  PRIMARY KEY (`idMunicipio`),
+  KEY `FK_tbmunicipio_depto` (`idDepartamento`),
+  CONSTRAINT `FK_tbmunicipio_depto` FOREIGN KEY (`idDepartamento`) REFERENCES `tbdepartamento` (`idDepartamento`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
